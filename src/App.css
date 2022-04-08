@@ -4,6 +4,13 @@
   color: white;
 }
 
+.App header input{
+  border-radius: 25px;
+  border: none;
+  height: 100%;
+  margin-bottom: 0;
+}
+
 .maincont{
   background-color: var(--color-secondary);
   max-height: calc(100vh - 8em);
@@ -21,7 +28,7 @@
   color: var(--color-danger);
 }
 
-.btn-primary{
+.boton{
   background-color: var(--color-accent);
   border: none;
   border-radius: 25px;
@@ -29,7 +36,7 @@
   color: var(--color-text)
 }
 
-.btn-primary:hover{
+.boton:hover{
   background-color: #db877b;
   color: var(--color-text)
 }

@@ -12,7 +12,25 @@ function intToChar(i) {
   return String.fromCharCode('A'.charCodeAt(0) + i);
 }
 
-  const Department = ({index, data, handler}) => {
+
+const Employee = ({index, data, handler, children}) => {
+  return(
+    <div className="employee">
+      <div className="d-flex justify-space-between">
+        <div>
+          {data}
+        </div>
+        <div>
+          {allocation[data]}
+        </div>
+      </div>
+      {children}
+    </div>
+  )
+}
+
+
+const Department = ({index, data, handler}) => {
 
   const deleteDepartment = () => {
     handler([...data.slice(0, index), ...data.slice(index + 1)]);
@@ -21,8 +39,14 @@ function intToChar(i) {
   return (
     <div className="container p-3 my-4 p-md-4 department">
       <div className="d-flex justify-content-between align-items-center">
-        <h3>Departamento {intToChar(index)}</h3>
+        <h3>
+          {Object.keys(data[index])[0]}
+        </h3>
         <button onClick={deleteDepartment} className='btn'><i className="bi bi-trash"></i></button>
+      </div>
+      
+      <div className="">
+        {/* display*/}
       </div>
       
       <hr />
@@ -34,18 +58,33 @@ function intToChar(i) {
 
 function App() {
   const [departments, dataHandler] = useState([
-      'a', 'c'
+      {
+        'Departamento 1': [
+          {
+            'Manager':['Developer', 'QA Tester']
+          }
+        ]
+      },
   ]);
 
+  const [newName, setNewName] = useState('');
+
   const addDepartment = () => {
-    dataHandler([...departments, {}]);
+    if(newName.length > 0) {
+      dataHandler([...departments, {[newName]:[]}]);
+      setNewName('');
+    }
   }
 
   return (
     <div className="App">
       <header >
-        <div className="container d-flex align-items-center justify-content-start h-100">
-          <button onClick={addDepartment} className='btn btn-primary py-2 px-4'><i className="bi bi-plus-lg"></i> Agregar departamento</button>
+        <div className="container d-flex align-items-start justify-content-center flex-column h-100">
+          <h2>Add a department</h2>
+          <div>
+            <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} />
+            <button onClick={addDepartment} className='boton px-2 py-1 ms-2'><i className="bi bi-plus-lg"></i></button>
+          </div>
         </div>
       </header>
 
@@ -53,7 +92,7 @@ function App() {
 
         {
           departments.map(
-            (_, index) => <Department index={index} data={departments} handler={dataHandler} /> 
+            (_, index) => <Department index={index} key={index} data={departments} handler={dataHandler} /> 
           )
         }
 
