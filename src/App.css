@@ -6,12 +6,19 @@
 
 .maincont{
   background-color: var(--color-secondary);
+  max-height: calc(100vh - 8em);
+  height: calc(100vh - 8em);
+  overflow-y: scroll;
 }
 
 .department{
   background-color: white;
   border-radius: 25px;
   box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.2)
+}
+
+.bi-trash{
+  color: var(--color-danger);
 }
 
 .btn-primary{
