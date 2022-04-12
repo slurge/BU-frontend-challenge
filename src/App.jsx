@@ -12,6 +12,21 @@ function intToChar(i) {
   return String.fromCharCode('A'.charCodeAt(0) + i);
 }
 
+function getTotal(data){
+  let total = 0;
+  Object.keys(data).forEach(key => {
+    if(typeof(data[key]) === 'string') {
+      total += allocation[data[key]];
+    } else {
+      if (Object.keys(data[key])[0] === 'Manager') {
+        total += allocation['Manager'];
+      }
+      total += getTotal(data[key]);
+    }
+  });
+  return total;
+}
+
 
 const Employee = ({index, data, handler}) => {
 
@@ -20,7 +35,7 @@ const Employee = ({index, data, handler}) => {
   const isManager = employeeName === 'Manager';
 
   return(
-    <div className="employee">
+    <div className="employee w-100">
       <div className="d-flex justify-content-between">
         <div>
           {employeeName}
@@ -39,7 +54,7 @@ const Employee = ({index, data, handler}) => {
           </div>
         )
       }
-      
+
     </div>
   )
 }
@@ -65,7 +80,7 @@ const Department = ({index, data, handler}) => {
       </div>
       
       <hr />
-      <div className="text-end">total</div>
+      <div className="text-end">Total: $ {getTotal(data[index][Object.keys(data[index])[0]])}</div>
     
     </div>
   )
@@ -76,11 +91,14 @@ function App() {
       {
         'Departamento 1': [
           {
-            'Manager':['Developer', 'QA Tester']
+            'Manager':['Developer', 'QA Tester', {
+              'Manager':[]
+            },]
           },
           'Developer'
         ]
       },
+      {'Departamento 2': []}
   ]);
 
   const [newName, setNewName] = useState('');
