@@ -13,18 +13,33 @@ function intToChar(i) {
 }
 
 
-const Employee = ({index, data, handler, children}) => {
+const Employee = ({index, data, handler}) => {
+
+  const employeeName = typeof(data) === 'string' ? data : Object.keys(data)[0];
+  const employeeAllocation = allocation[employeeName];
+  const isManager = employeeName === 'Manager';
+
   return(
     <div className="employee">
-      <div className="d-flex justify-space-between">
+      <div className="d-flex justify-content-between">
         <div>
-          {data}
+          {employeeName}
         </div>
         <div>
-          {allocation[data]}
+          $ {employeeAllocation} 
         </div>
       </div>
-      {children}
+      
+      {
+        isManager && 
+        data['Manager'].map((emp, index) => 
+          <div key={index} className="d-flex">
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <Employee index={index} data={emp} handler={handler}/>
+          </div>
+        )
+      }
+      
     </div>
   )
 }
@@ -46,7 +61,7 @@ const Department = ({index, data, handler}) => {
       </div>
       
       <div className="">
-        {/* display*/}
+        {data[index][Object.keys(data[index])[0]].map((emp, index) => <Employee key={index} index={index} data={emp} handler={handler}/>)}
       </div>
       
       <hr />
@@ -62,7 +77,8 @@ function App() {
         'Departamento 1': [
           {
             'Manager':['Developer', 'QA Tester']
-          }
+          },
+          'Developer'
         ]
       },
   ]);
