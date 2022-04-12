@@ -9,6 +9,8 @@
   border: none;
   height: 100%;
   margin-bottom: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .maincont{
@@ -39,4 +41,24 @@
 .boton:hover{
   background-color: #db877b;
   color: var(--color-text)
+}
+
+.empbutton{
+  color: var(--color-primary);
+}
+.empbutton:hover{
+  color: var(--color-accent);
+}
+
+.dropdown-menu{
+  border-radius: 25px;
+}
+
+.dropdown-item:focus, .dropdown-item:hover{
+  background-color: transparent;
+  color: var(--color-accent);
+}
+
+.dropdown-toggle::after{
+  display: none;
 }

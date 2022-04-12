@@ -27,6 +27,23 @@ function getTotal(data){
   return total;
 }
 
+const AddEmployee = ({data, handler}) => {
+  return(
+    <div className="dropdown">
+      <a href="#" className='empbutton dropdown-toggle' id="addDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-plus-lg"></i>
+      </a>
+      <ul className='dropdown-menu' aria-labelledby='addDropdown'>
+        {Object.keys(allocation).map((key, index) => 
+          <li key={index}>
+            <a href="#" className='dropdown-item'>{key}</a>
+          </li>
+        )}
+      </ul>
+    </div>
+  )
+}
+
 
 const Employee = ({index, data, handler}) => {
 
@@ -54,7 +71,10 @@ const Employee = ({index, data, handler}) => {
           </div>
         )
       }
-
+      {
+        isManager && 
+        <AddEmployee />
+      }
     </div>
   )
 }
@@ -64,6 +84,12 @@ const Department = ({index, data, handler}) => {
 
   const deleteDepartment = () => {
     handler([...data.slice(0, index), ...data.slice(index + 1)]);
+  }
+
+  const addEmployee = (employee) => {
+    const newData = [...data];
+    newData[index] = [...newData[index], employee];
+    handler(newData);
   }
 
   return (
@@ -78,6 +104,8 @@ const Department = ({index, data, handler}) => {
       <div className="">
         {data[index][Object.keys(data[index])[0]].map((emp, index) => <Employee key={index} index={index} data={emp} handler={handler}/>)}
       </div>
+
+      <AddEmployee />
       
       <hr />
       <div className="text-end">Total: $ {getTotal(data[index][Object.keys(data[index])[0]])}</div>
