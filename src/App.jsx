@@ -27,7 +27,13 @@ function getTotal(data){
   return total;
 }
 
-const AddEmployee = ({data, handler}) => {
+const AddEmployee = ({handler}) => {
+
+  const add = (employee) => {
+    e = employee === 'Manager' ? {[employee]:[]} : employee;
+    handler(e);
+  } 
+
   return(
     <div className="dropdown">
       <a href="#" className='empbutton dropdown-toggle' id="addDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -36,7 +42,7 @@ const AddEmployee = ({data, handler}) => {
       <ul className='dropdown-menu' aria-labelledby='addDropdown'>
         {Object.keys(allocation).map((key, index) => 
           <li key={index}>
-            <a href="#" className='dropdown-item'>{key}</a>
+            <a href="#" onClick={e=> add(e.target.value)} className='dropdown-item' value={key}>{key}</a>
           </li>
         )}
       </ul>
@@ -51,6 +57,12 @@ const Employee = ({index, data, handler}) => {
   const employeeAllocation = allocation[employeeName];
   const isManager = employeeName === 'Manager';
 
+  const addEmployee = (employee) => {
+    const newData = [...Object.values(data)[0]];
+    newData.push(employee);
+    handler(newData);
+  }
+
   return(
     <div className="employee w-100">
       <div className="d-flex justify-content-between">
@@ -58,7 +70,7 @@ const Employee = ({index, data, handler}) => {
           {employeeName}
         </div>
         <div>
-          $ {employeeAllocation} 
+          $ <strong>{employeeAllocation} </strong>
         </div>
       </div>
       
@@ -73,7 +85,7 @@ const Employee = ({index, data, handler}) => {
       }
       {
         isManager && 
-        <AddEmployee />
+        <AddEmployee data={data} handler={handler}/>
       }
     </div>
   )
@@ -108,7 +120,7 @@ const Department = ({index, data, handler}) => {
       <AddEmployee />
       
       <hr />
-      <div className="text-end">Total: $ {getTotal(data[index][Object.keys(data[index])[0]])}</div>
+      <div className="text-end">Total: $ <strong>{getTotal(data[index][Object.keys(data[index])[0]])}</strong></div>
     
     </div>
   )

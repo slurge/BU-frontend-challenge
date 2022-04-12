@@ -44,10 +44,14 @@
 }
 
 .empbutton{
-  color: var(--color-primary);
+  color: white;
+  padding: 0.1em 0.15em;
+  border-radius: 50%;
+  background-color: var(--color-primary);
 }
 .empbutton:hover{
-  color: var(--color-accent);
+  color: white;
+  background-color: var(--color-accent);
 }
 
 .dropdown-menu{
